@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Telelenker - Embroidery & Handicrafts Production</title>
     <style>
-        /* CSS Variables for Theme */
         :root {
             --primary-color: #2c3e50;
             --accent-color: #e74c3c;
@@ -13,6 +12,7 @@
             --dark-text: #333;
             --white: #ffffff;
             --gray: #7f8c8d;
+            --success-color: #2ecc71;
         }
 
         * {
@@ -45,39 +45,61 @@
             font-size: 24px;
             font-weight: bold;
             color: var(--primary-color);
-            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--accent-color);
         }
 
         .lang-switcher select {
             padding: 8px 15px;
-            font-size: 14px;
             border: 2px solid var(--primary-color);
             border-radius: 5px;
-            background-color: var(--white);
             cursor: pointer;
             font-weight: bold;
             color: var(--primary-color);
             outline: none;
-            transition: all 0.3s ease;
         }
 
-        .lang-switcher select:hover {
-            background-color: var(--primary-color);
-            color: var(--white);
+        /* Sections Handling */
+        .page-section {
+            display: none;
         }
 
-        /* Hero & Video Section */
+        .page-section.active {
+            display: block;
+        }
+
+        /* Video Section */
         .video-container {
             width: 100%;
             max-width: 1000px;
             margin: 40px auto;
             padding: 0 20px;
-            text-align: center;
         }
 
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 12px;
@@ -110,51 +132,100 @@
 
         .intro-text, .products-text {
             font-size: 18px;
-            color: var(--dark-text);
             margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        /* Photo Gallery / Grid */
+        /* Dynamic Gallery (Grid) */
+        .gallery-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
         .gallery-title {
             font-size: 28px;
             color: var(--primary-color);
-            margin: 50px 0 20px 0;
+            margin-bottom: 25px;
             text-align: center;
         }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto 50px auto;
-            padding: 0 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .gallery-item {
-            position: relative;
-            overflow: hidden;
+            background: var(--white);
             border-radius: 10px;
+            overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            height: 250px;
-            background-color: #ddd;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s;
         }
 
         .gallery-item:hover {
             transform: translateY(-5px);
         }
 
-        .gallery-item img {
+        .gallery-item img, .gallery-item video {
             width: 100%;
-            height: 100%;
+            height: 250px;
             object-fit: cover;
+            display: block;
         }
 
-        /* Call To Action (CTA) & Contact */
+        /* Admin Dashboard Panel */
+        .admin-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .admin-container h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .submit-btn {
+            background-color: var(--success-color);
+            color: var(--white);
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* CTA & Contact */
         .cta-section {
             background-color: var(--primary-color);
             color: var(--white);
@@ -175,13 +246,7 @@
             text-decoration: none;
             border-radius: 30px;
             margin-top: 25px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .cta-btn:hover {
-            background-color: #c0392b;
-            transform: scale(1.05);
         }
 
         .contact-info {
@@ -191,93 +256,95 @@
             padding-top: 20px;
         }
 
-        .contact-info p {
-            margin: 5px 0;
-        }
+        .contact-info a { color: #f1c40f; text-decoration: none; font-weight: bold; }
 
-        .contact-info a {
-            color: #f1c40f;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* Footer */
         footer {
             text-align: center;
             padding: 20px;
             color: var(--gray);
             font-size: 14px;
-            margin-top: 40px;
             background-color: #fff;
             border-top: 1px solid #eee;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .content-section h1 { font-size: 28px; }
-            .intro-text, .products-text { font-size: 16px; }
-            header { padding: 15px 20px; }
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">Telelenker</div>
-        <div class="lang-switcher">
-            <select id="languageSelect" onchange="changeLanguage(this.value)">
-                <option value="en">English</option>
-                <option value="de">Deutsch (German)</option>
-                <option value="tr">Türkçe (Turkish)</option>
-                <option value="fr">Français (French)</option>
-            </select>
+        <div class="logo" onclick="showSection('home')">Telelenker</div>
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="showSection('gallery-view')">Gallery</button>
+            <button class="nav-btn" style="background-color: #7f8c8d;" onclick="showSection('admin-view')">Admin Panel</button>
+            <div class="lang-switcher">
+                <select id="languageSelect" onchange="changeLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="de">Deutsch (German)</option>
+                    <option value="tr">Türkçe (Turkish)</option>
+                    <option value="fr">Français (French)</option>
+                </select>
+            </div>
         </div>
     </header>
 
-    <div class="video-container">
-        <div class="video-wrapper">
-            <video id="promoVideo" controls autoplay muted loop>
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-sewing-machine-stitching-a-fabric-42004-large.mp4" type="video/mp4">
-                <track src="data:text/vtt;base64,V0VCVlRUCgoxCjAwOjAwOjAxLjAwMCAtLT4gMDA6MDA6MDUuMDAwCkVuIEJsaWNrIGF1ZiB1bnNlcmUgRW1icm9pZGVyeS0gdW5kIEhhbmRhcmJlaXRzcHJvZHVrdGlvbi4KCjIKMDA6MDA6MDUuNTAwIC0tPiAwMDowMDoxMC4wMDAKTW9kZXJuZSBNYXNjaGluZW4gdW5kIGZhaGlnZSBLw7luc3RsZXIuCgozCjAwOjAwOjEwLjUwMCAtLT4gMDA6MDA6MTUuMDAwCkhvY2h3ZXJ0aWdlIFByb2R1a3RlIGbDdXIgRXVyb3BhIHVuZCBkaWUgVVNBLg==" kind="subtitles" srclang="de" label="Deutsch" default>
-                Your browser does not support the video tag.
-            </video>
+    <div id="home" class="page-section active">
+        <div class="video-container">
+            <div class="video-wrapper">
+                <video id="promoVideo" controls autoplay muted loop playsinline>
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    <track src="data:text/vtt;base64,V0VCVlRUCgoxCjAwOjAwOjAxLjAwMCAtLT4gMDA6MDA6MDUuMDAwCkVuIEJsaWNrIGF1ZiB1bnNlcmUgRW1icm9pZGVyeS0gdW5kIEhhbmRhcmJlaXRzcHJvZHVrdGlvbi4KCjIKMDA6MDA6MDUuNTAwIC0tPiAwMDowMDoxMC4wMDAKTW9kZXJuZSBNYXNjaChimZW4gdW5kIGZhaGlnZSBLw7luc3RsZXIu" kind="subtitles" srclang="de" label="Deutsch" default>
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h1 id="mainHeading">Welcome to Telelenker</h1>
+            <p class="intro-text" id="companyIntro">
+                Telelenker is a leading manufacturer of marketing, promotional items, and handicraft products. We create everything from trendy embroidery patches to customized gifts.
+            </p>
+            <p class="products-text" id="productGlimpse">
+                Our products include fashionable patches, bags, caps, and other promotional items that are highly popular in Europe and the USA.
+            </p>
+        </div>
+
+        <div class="cta-section">
+            <h2 id="ctaHeading">Ready to Elevate Your Brand?</h2>
+            <a href="tel:+923152820296" class="cta-btn" id="ctaButton">Order Today / Contact Us</a>
+            <div class="contact-info">
+                <p><strong>Phone:</strong> +92 315 2820296</p>
+                <p><strong>Email:</strong> <a href="mailto:telelenker@gmail.com">telelenker@gmail.com</a></p>
+            </div>
         </div>
     </div>
 
-    <div class="content-section">
-        <h1 id="mainHeading">Welcome to Telelenker</h1>
-        <p class="intro-text" id="companyIntro">
-            Telelenker is a leading manufacturer of marketing, promotional items, and handicraft products. We create everything from trendy embroidery patches to customized gifts.
-        </p>
-        
-        <p class="products-text" id="productGlimpse">
-            Our products include fashionable patches, bags, caps, and other promotional items that are highly popular in Europe and the USA.
-        </p>
-    </div>
-
-    <div class="gallery-title" id="galleryTitle">Trending Collections</div>
-    <div class="gallery-grid">
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=400&q=80" alt="Premium Embroidery Art">
-        </div>
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=400&q=80" alt="Fashion Patches on Clothing">
-        </div>
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80" alt="Handicraft Premium Bag">
-        </div>
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=400&q=80" alt="Custom Promotional Cap">
+    <div id="gallery-view" class="page-section">
+        <div class="gallery-container">
+            <div class="gallery-title" id="galleryTitle">Trending Collections</div>
+            <div class="gallery-grid" id="dynamicGalleryGrid"></div>
         </div>
     </div>
 
-    <div class="cta-section">
-        <h2 id="ctaHeading">Ready to Elevate Your Brand?</h2>
-        <a href="tel:+923152820296" class="cta-btn" id="ctaButton">Order Today / Contact Us</a>
-        
-        <div class="contact-info">
-            <p><strong>Phone:</strong> +92 315 2820296</p>
-            <p><strong>Email:</strong> <a href="mailto:telelenker@gmail.com">telelenker@gmail.com</a></p>
+    <div id="admin-view" class="page-section">
+        <div class="admin-container">
+            <h2>Telelenker Admin Panel</h2>
+            <form id="adminForm" onsubmit="handleUpload(event)">
+                <div class="form-group">
+                    <label>Select Media Type</label>
+                    <select id="mediaType">
+                        <option value="image">Photo / Image</option>
+                        <option value="video">Video Clip</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Media File URL / Link</label>
+                    <input type="url" id="mediaUrl" placeholder="https://example.com/item.jpg or .mp4" required>
+                    <small style="color: var(--gray); font-size:12px; display:block; margin-top:5px;">
+                        Tip: You can use direct image links or upload to platforms like Postimages/Imgur and paste URL.
+                    </small>
+                </div>
+                <button type="submit" class="submit-btn">Add to Gallery & Website</button>
+            </form>
         </div>
     </div>
 
@@ -286,6 +353,7 @@
     </footer>
 
     <script>
+        // Multi-language translation database
         const translations = {
             en: {
                 heading: "Welcome to Telelenker",
@@ -305,7 +373,7 @@
             },
             tr: {
                 heading: "Telelenker'e Hoş Geldiniz",
-                intro: "Telelenker; pazarlama, promosyon ürünleri اور el sanatları ürünlerinin lider üreticisidir. Trend nakış yamalarından özel tasarım hediyelere kadar her şeyi üretiyoruz.",
+                intro: "Telelenker; pazarlama, promosyon ürünleri ve el sanatları ürünlerinin lider üreticisidir. Trend nakış yamalarından özel tasarım hediyelere kadar her şeyi üretiyoruz.",
                 glimpse: "Ürünlerimiz arasında Avrupa ve ABD'de oldukça popüler olan şık yamalar, çantalar, şapkalar ve diğer promosyon ürünleri yer almaktadır.",
                 gallery: "Trend Koleksiyonlar",
                 ctaHead: "Markanızı Yükseltmeye Hazır mısınız?",
@@ -321,6 +389,19 @@
             }
         };
 
+        // Navigation Engine
+        function showSection(sectionId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            if(sectionId === 'gallery-view') {
+                renderGallery();
+            }
+        }
+
+        // Language Switcher Engine
         function changeLanguage(lang) {
             document.getElementById('mainHeading').innerText = translations[lang].heading;
             document.getElementById('companyIntro').innerText = translations[lang].intro;
@@ -328,16 +409,64 @@
             document.getElementById('galleryTitle').innerText = translations[lang].gallery;
             document.getElementById('ctaHeading').innerText = translations[lang].ctaHead;
             document.getElementById('ctaButton').innerText = translations[lang].ctaBtn;
-            
-            // Adjust page direction if needed (optional for multilang, kept standard LTR for Western/Turkish target)
             document.documentElement.lang = lang;
         }
 
-        // Force browser to show track subtitles immediately
+        // Default Sample Data if LocalStorage is Empty
+        const defaultGallery = [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=400&q=80' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=400&q=80' }
+        ];
+
+        // Admin Upload System (Saves data instantly to localStorage)
+        function handleUpload(event) {
+            event.preventDefault();
+            const type = document.getElementById('mediaType').value;
+            const url = document.getElementById('mediaUrl').value;
+
+            let currentGallery = JSON.parse(localStorage.getItem('telelenker_gallery')) || defaultGallery;
+            currentGallery.unshift({ type, url }); // Add new item to the top
+            
+            localStorage.setItem('telelenker_gallery', JSON.stringify(currentGallery));
+            
+            alert('Media successfully added to the Gallery!');
+            document.getElementById('adminForm').reset();
+            showSection('gallery-view'); // Redirect to gallery view
+        }
+
+        // Render Gallery Dynamic View
+        function renderGallery() {
+            const grid = document.getElementById('dynamicGalleryGrid');
+            const items = JSON.parse(localStorage.getItem('telelenker_gallery')) || defaultGallery;
+            
+            grid.innerHTML = ''; // Clear grid
+            
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'gallery-item';
+                
+                if(item.type === 'image') {
+                    itemDiv.innerHTML = `<img src="${item.url}" alt="Telelenker Product" onerror="this.src='https://via.placeholder.com/400x250?text=Image+Load+Error'">`;
+                } else if(item.type === 'video') {
+                    itemDiv.innerHTML = `
+                        <video controls muted playsinline>
+                            <source src="${item.url}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>`;
+                }
+                grid.appendChild(itemDiv);
+            });
+        }
+
+        // Initial setup for captions forcing
         window.addEventListener('load', () => {
             const video = document.getElementById('promoVideo');
             if (video && video.textTracks.length > 0) {
                 video.textTracks[0].mode = 'showing';
+            }
+            // Populate gallery on load
+            if(!localStorage.getItem('telelenker_gallery')) {
+                localStorage.setItem('telelenker_gallery', JSON.stringify(defaultGallery));
             }
         });
     </script>
